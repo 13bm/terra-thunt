@@ -1,3 +1,14 @@
+try {
+    Write-Host "Downloading Terra-Thunt"
+    $null = Invoke-WebRequest -Uri https://github.com/13bm/terra-thunt/archive/refs/heads/main.zip -OutFile .\terra-thunt.zip
+    $null = Expand-Archive .\terra-thunt.zip -DestinationPath .\terra-thunt-main -Force
+    $null = Get-ChildItem -Path ".\terra-thunt-main\*" -Recurse | Move-Item -Destination .\ -Force
+    rm .\terra-thunt-main
+    rm .\terra-thunt.zip
+}
+catch {
+    throw $_.Exception.Message
+}
 Function Clean-up {
     $old_ErrorActionPreference = $ErrorActionPreference
     $ErrorActionPreference = 'SilentlyContinue'
