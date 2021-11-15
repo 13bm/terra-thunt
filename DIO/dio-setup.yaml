@@ -6,7 +6,7 @@ runcmd:
   - chmod +x /root/install-tools.v0.3.2.sh
   - echo '/root/install-tools.v0.3.2.sh' >>/root/.bashrc
   - touch "root/installed.flag"
-  - echo 'if [ ! -e "$HOME/installed.flag" ]; then "$HOME/install.sh ; fi' >>/root/.bashrc
+  - echo 'if [ ! -e "/root/installed.flag" ]; then "/root/install.sh ; fi' >>/root/.bashrc
   - echo '. ~/.profile' >>/root/.bashrc
   # head -n -3 /root/.bashrc > tmp && mv tmp /root/.bashrc
 # - printf 'y\n' | sudo /home/ubuntu/install-tools.v0.3.2.sh

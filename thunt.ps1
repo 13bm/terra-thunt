@@ -1,7 +1,7 @@
 try {
     $old_ErrorActionPreference = $ErrorActionPreference
     $ErrorActionPreference = 'SilentlyContinue'
-    Write-Host "Downloading\Updating Terra-Thunt"
+    Write-Host "Downloading/Updating Terra-Thunt"
     $null = Invoke-WebRequest -Uri https://github.com/13bm/terra-thunt/archive/refs/heads/main.zip -OutFile .\terra-thunt.zip
     $null = Expand-Archive .\terra-thunt.zip -DestinationPath .\terra-thunt-main -Force
     $null = Move-Item -Path .\terra-thunt-main\terra-thunt-main\* -Destination .\ -Force
@@ -158,7 +158,7 @@ Function destroy {
 }
 Get-Provider
 #Start-Sleep -Seconds 30
-ssh-keygen -t rsa -C "Thunt" -f .\id_ssh -q -N """"
+ECHO 'n' | ssh-keygen -t rsa -C "Thunt" -f .\id_ssh -q -N """"
 $env:TF_VAR_SSH_KEY = cat id_ssh.pub
 if($DIO -eq $true){
     if($tfl -eq $true){
