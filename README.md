@@ -32,26 +32,26 @@ Digital Oceans is the **_recommended_** choice for beginners
 	- https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html
 ## 3.0 Running Terra-Thunt
 Open powershell and run Terra-Thunt
-```ps
+```md
 PS > .\thunt.ps1
 ```
 Terra-Thunt will be downloaded/updated
-```ps
+```md
 PS > .\thunt.ps1
 Downloading\Updating Terra-Thunt
 ```
 Pick your Cloud provider
-```ps
+```md
 Please pick Cloud Provider, [A] AWS or [D] DigitalOcean:
 ```
 - **AWS** option will give you the choice of using preconfigured aws keys located in the **`~/.aws/`** folder ( more on this  [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)) or enviorment variables which you will be ask for. Please save AWS keys securely 
 
-  ```ps
+  ```md
   Please pick which aws creds to use, [A] /.aws/ or [E] Environment variables:
   ```
  - **Digital Ocean** option will ask for the access token, please save this token securely
 
-	```ps
+	```md
 	Please Provide DigitalOcean Token:
 	```
 
@@ -74,13 +74,13 @@ Would you like to replace the existing node.cfg, Answer ```y```
  ```"Would you like to replace the existing node.cfg with the above file?"```
 
 Once Zeek is done setting up, you can see the 3 lab directories by running the command:
-```bash
+```md
 ls -Al ~/lab*
 ```
 
 If you get back a listing that includes "lab1", "lab2", and "lab3" similar to the below, you have everything installed and are ready to start the labs. 
 
-```mb
+```md
 /root/lab1:
 total 88512
 -rw-rw-r-- 1 1000 1000 1769129 Feb 17 17:25 conn.log
@@ -125,14 +125,14 @@ Cloud providers continues to bill you for the machine until you delete it! Loggi
 
 Terra-Thunt can tear down and destroy all resources it used to make the machine. 
 Answer ```r``` to do so.
-```ps
+```md
 Please confirm, enter [R] Ready to teardown infrastructure or [C] to connect again:
 ```
 
 In the event that you closed the powershell window before tearing down the infrastructure
 you can simply run Terra-Thunt again. 
 
-```ps
+```md
 PS > .\thunt.ps1
 ```
 
