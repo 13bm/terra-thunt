@@ -63,15 +63,21 @@ When connected a scirpt will be run to finish the install on the machine. This s
 In this script you'll be asked if users other than root should be allowed to run wireshark to capture packets. Unless you know you'll be using this long term, will be creating non-root user accounts, and want them to sniff packets, leave the answer at the default of "No". 
 
 You'll also be asked to configure Zeek, Answer ```y```
-```"Would you like to continue running the zeek configuration script and generate a new node.cfg file? (y/n) ?:``` 
+```
+"Would you like to continue running the zeek configuration script and generate a new node.cfg file? (y/n) ?:
+``` 
 
 For eth0 you'll be asked, Answer ```y```
-```"Would you like to include it as a sniff interface (y/n)?"```  
+```
+"Would you like to include it as a sniff interface (y/n)?"
+```  
 
 For eth1, Answer ```n```. 
 
 Would you like to replace the existing node.cfg, Answer ```y```
- ```"Would you like to replace the existing node.cfg with the above file?"```
+ ```
+"Would you like to replace the existing node.cfg with the above file?"
+```
 
 Once Zeek is done setting up, you can see the 3 lab directories by running the command:
 ```md
