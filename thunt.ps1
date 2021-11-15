@@ -1,4 +1,3 @@
-# places holder
 try {
     $old_ErrorActionPreference = $ErrorActionPreference
     $ErrorActionPreference = 'SilentlyContinue'
@@ -22,10 +21,12 @@ Function Clean-up {
     rm id_ssh.pub
 }
 Function Terraform-installed{
-            if (terraform){
+            try {
+                if (terraform){
                 Write-Host "Terraform already installed, nice"
+                }
             }
-            else {
+            catch {
                 $tf = '.\terraform.exe'
                 if (-not(Test-Path -Path $tf -PathType Leaf)) {
                     try {
