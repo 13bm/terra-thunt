@@ -10,7 +10,7 @@ we hope you'll take some more time to try out the tools and do the labs!
 ```
 
 ### Helpful stuff for this lab
-If you are new to the Linux operating system please visit to page on navigating the Linux Filesystem
+If you are new to the Linux operating system please visit this page on navigating the Linux Filesystem
 -	https://www.redhat.com/sysadmin/navigating-linux-filesystem
 	
 ## Getting Started
