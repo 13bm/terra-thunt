@@ -1,0 +1,25 @@
+#cloud-config
+# Add groups to the system
+# Adds the ubuntu group with members 'root' and 'sys'
+# and the empty group Thuntg.
+#groups:
+#  - ubuntu: [root,sys]
+#  - Thuntg
+
+# Add users to the system. Users are added after groups are added.
+#users:
+#  - default
+#  - name: Thunt
+#    gecos: Thunt
+#    shell: /bin/bash
+#    primary_group: Thuntg
+#    sudo: ALL=(ALL) NOPASSWD:ALL
+#    groups: users, admin
+#    lock_passwd: false
+
+# Downloads Thunt script
+runcmd:
+  - wget https://threat-huntiing.s3.amazonaws.com/install-tools.v0.3.2.sh -P /home/ubuntu
+  - chmod +x /home/ubuntu/install-tools.v0.3.2.sh
+  - echo 'sudo /home/ubuntu/install-tools.v0.3.2.sh' >>/home/ubuntu/.bashrc
+# - printf 'y\n' | sudo /home/ubuntu/install-tools.v0.3.2.sh

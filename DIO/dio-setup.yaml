@@ -1,0 +1,10 @@
+#cloud-config
+# Downloads Thunt script
+runcmd:
+  - usermod -d /root/ root
+  - curl -L "https://threat-huntiing.s3.amazonaws.com/install-tools.v0.3.2.sh" -o /root/install-tools.v0.3.2.sh
+  - chmod +x /root/install-tools.v0.3.2.sh
+  - echo '/root/install-tools.v0.3.2.sh' >>/root/.bashrc
+  # echo '. ~/.profile' >>/root/.bashrc
+  # head -n -3 /root/.bashrc > tmp && mv tmp /root/.bashrc
+# - printf 'y\n' | sudo /home/ubuntu/install-tools.v0.3.2.sh
