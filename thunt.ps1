@@ -1,7 +1,8 @@
+# places holder
 try {
     $old_ErrorActionPreference = $ErrorActionPreference
     $ErrorActionPreference = 'SilentlyContinue'
-    Write-Host "Downloading\Updateing Terra-Thunt"
+    Write-Host "Downloading\Updating Terra-Thunt"
     $null = Invoke-WebRequest -Uri https://github.com/13bm/terra-thunt/archive/refs/heads/main.zip -OutFile .\terra-thunt.zip
     $null = Expand-Archive .\terra-thunt.zip -DestinationPath .\terra-thunt-main -Force
     $null = Move-Item -Path .\terra-thunt-main\terra-thunt-main\* -Destination .\ -Force
