@@ -2,8 +2,8 @@ try {
     Write-Host "Downloading Terra-Thunt"
     $null = Invoke-WebRequest -Uri https://github.com/13bm/terra-thunt/archive/refs/heads/main.zip -OutFile .\terra-thunt.zip
     $null = Expand-Archive .\terra-thunt.zip -DestinationPath .\terra-thunt-main -Force
-    $null = Get-ChildItem -Path ".\terra-thunt-main\*" -Recurse | Move-Item -Destination .\ -Force
-    rm .\terra-thunt-main
+    $null = Move-Item -Path .\terra-thunt-main\terra-thunt-main\* -Destination .\ -Force
+    rm -r -fo .\terra-thunt-main
     rm .\terra-thunt.zip
 }
 catch {
