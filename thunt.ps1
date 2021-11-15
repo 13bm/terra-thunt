@@ -1,5 +1,7 @@
 try {
-    Write-Host "Downloading Terra-Thunt"
+    $old_ErrorActionPreference = $ErrorActionPreference
+    $ErrorActionPreference = 'SilentlyContinue'
+    Write-Host "Downloading\Updateing Terra-Thunt"
     $null = Invoke-WebRequest -Uri https://github.com/13bm/terra-thunt/archive/refs/heads/main.zip -OutFile .\terra-thunt.zip
     $null = Expand-Archive .\terra-thunt.zip -DestinationPath .\terra-thunt-main -Force
     $null = Move-Item -Path .\terra-thunt-main\terra-thunt-main\* -Destination .\ -Force
@@ -14,35 +16,38 @@ Function Clean-up {
     $ErrorActionPreference = 'SilentlyContinue'
     Remove-Item Env:TF_VAR_SSH_KEY
     Set-Variable -Name 'DIO' -Value (0) -Scope Global
+    Set-Variable -Name 'tfl' -Value (0) -Scope Global
     rm id_ssh
     rm id_ssh.pub
 }
 Function Terraform-installed{
-    $old_ErrorActionPreference = $ErrorActionPreference
-    $ErrorActionPreference = 'SilentlyContinue'
             if (terraform){
                 Write-Host "Terraform already installed, nice"
             }
-            $tf = '.\terraform.exe'
-            if (-not(Test-Path -Path $tf -PathType Leaf)) {
-                try {
-                    Write-Host "Downloading Terraform"
-                    $null = Invoke-WebRequest -Uri https://releases.hashicorp.com/terraform/1.0.11/terraform_1.0.11_windows_amd64.zip -OutFile .\terraform.zip
-                    Write-Host "Terraform Downloaded!"
-                    Write-Host "Now extracting"
-                    $null = Expand-Archive .\terraform.zip -DestinationPath .\terraform
-                    $null = Move-Item -Path .\terraform\terraform.exe -Destination terraform.exe
-                    rm .\terraform
-                    rm terraform.zip
-                    Write-Host "Terraform ready!!"
-                }
-                catch {
-                    throw $_.Exception.Message
-                }
-            }
-            # If the file already exists, show the message and do nothing.
             else {
-                Write-Host "Local Terraform install"
+                $tf = '.\terraform.exe'
+                if (-not(Test-Path -Path $tf -PathType Leaf)) {
+                    try {
+                        Write-Host "Downloading Terraform"
+                        $null = Invoke-WebRequest -Uri https://releases.hashicorp.com/terraform/1.0.11/terraform_1.0.11_windows_amd64.zip -OutFile .\terraform.zip
+                        Write-Host "Terraform Downloaded!"
+                        Write-Host "Now extracting"
+                        $null = Expand-Archive .\terraform.zip -DestinationPath .\terraform
+                        $null = Move-Item -Path .\terraform\terraform.exe -Destination terraform.exe
+                        rm .\terraform
+                        rm terraform.zip
+                        Set-Variable -Name 'tfl' -Value (1) -Scope Global
+                        Write-Host "Terraform ready!!"
+                    }
+                    catch {
+                        throw $_.Exception.Message
+                    }
+                }
+                # If the file already exists, show the message and do nothing.
+                else {
+                    Set-Variable -Name 'tfl' -Value (1) -Scope Global
+                    Write-Host "Local Terraform install"
+                }
             }
         }
 
@@ -107,9 +112,46 @@ function DIOcreds {
 }
 Function Login {
     if($DIO -eq $true){
-        Start-Process powershell -ArgumentList "ssh root@$(terraform '-chdir=.\DIO' output -raw public_ip) -i id_ssh"
+        if($tfl -eq $true){
+            Start-Process powershell -ArgumentList "ssh root@$(.\terraform '-chdir=.\DIO' output -raw public_ip) -i id_ssh"
+        }
+        else {
+            Start-Process powershell -ArgumentList "ssh root@$(terraform '-chdir=.\DIO' output -raw public_ip) -i id_ssh"
+        }
     }
-    else {Start-Process powershell -ArgumentList "ssh ubuntu@$(terraform '-chdir=.\AWS' output -raw public_ip) -i id_ssh"
+    else {
+        if($tfl -eq $true){
+            Start-Process powershell -ArgumentList "ssh root@$(.\terraform '-chdir=.\AWS' output -raw public_ip) -i id_ssh"
+        }
+        else {
+            Start-Process powershell -ArgumentList "ssh ubuntu@$(terraform '-chdir=.\AWS' output -raw public_ip) -i id_ssh"
+        }
+    }
+}
+Function destroy {
+    if($DIO -eq $true){
+        if($tfl -eq $true){
+            .\terraform '-chdir=.\DIO' init
+            .\terraform '-chdir=.\DIO' destroy -auto-approve
+            Clean-up
+        }
+        else {
+            terraform '-chdir=.\DIO' init
+            terraform '-chdir=.\DIO' destroy -auto-approve
+            Clean-up
+        }
+    }
+    else {
+        if($tfl -eq $true){
+            .\terraform '-chdir=.\AWS' init
+            .\terraform '-chdir=.\AWS' destroy -auto-approve
+            Clean-up
+        }
+        else {
+            terraform '-chdir=.\AWS' init
+            terraform '-chdir=.\AWS' destroy -auto-approve
+            Clean-up
+        }
     }
 }
 Get-Provider
@@ -117,12 +159,24 @@ Get-Provider
 ssh-keygen -t rsa -C "Thunt" -f .\id_ssh -q -N """"
 $env:TF_VAR_SSH_KEY = cat id_ssh.pub
 if($DIO -eq $true){
-    terraform '-chdir=.\DIO' init
-    terraform '-chdir=.\DIO' apply -auto-approve
+    if($tfl -eq $true){
+        .\terraform '-chdir=.\DIO' init
+        .\terraform '-chdir=.\DIO' apply -auto-approve
+    }
+    else {
+        terraform '-chdir=.\DIO' init
+        terraform '-chdir=.\DIO' apply -auto-approve
+    }
 }
 else {
-    terraform '-chdir=.\AWS' init
-    terraform '-chdir=.\AWS' apply -auto-approve
+    if($tfl -eq $true){
+        .\terraform '-chdir=.\AWS' init
+        .\terraform '-chdir=.\AWS' apply -auto-approve
+    }
+    else {
+        terraform '-chdir=.\AWS' init
+        terraform '-chdir=.\AWS' apply -auto-approve
+    }
 }
 Write-Host "Waiting 30s for host to come online"
 Start-Sleep -Seconds 30
@@ -133,29 +187,11 @@ function Get-Answer {
     switch ($input) `
     {
         'r' {
-            if($DIO -eq $true){
-                terraform '-chdir=.\DIO' init
-                terraform '-chdir=.\DIO' destroy -auto-approve
-                Clean-up
-            }
-            else {
-                terraform '-chdir=.\AWS' init
-                terraform '-chdir=.\AWS' destroy -auto-approve
-                Clean-up
-            }
+            destroy
         }
     
         'ready' {
-            if($DIO -eq $true){
-                terraform '-chdir=.\DIO' init
-                terraform '-chdir=.\DIO' destroy -auto-approve
-                Clean-up
-            }
-            else {
-                terraform '-chdir=.\AWS' init
-                terraform '-chdir=.\AWS' destroy -auto-approve
-                Clean-up
-            }
+            destroy
         }
 
         'c' {
