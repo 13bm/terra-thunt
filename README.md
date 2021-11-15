@@ -126,7 +126,7 @@ total 319724
 ## 5.0 Tearing Down
 
 ### Very Important Infomation
-Cloud providers continues to bill you for the machine until you delete it! Logging out of it, halting it, or closing the powershell windows _**will not**_ stop the billing. The only way to stop paying for the instance is to tear it down / destroy it
+Cloud providers continues to bill you for the machine until you delete it! Logging out of it, halting it, or closing the powershell windows _**will not** stop the billing_. The only way to stop paying for the instance is to tear it down / destroy it
 
 
 Terra-Thunt can tear down and destroy all resources it used to make the machine. 
