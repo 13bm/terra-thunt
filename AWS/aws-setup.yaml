@@ -22,4 +22,7 @@ runcmd:
   - wget https://threat-huntiing.s3.amazonaws.com/install-tools.v0.3.2.sh -P /home/ubuntu
   - chmod +x /home/ubuntu/install-tools.v0.3.2.sh
   - echo 'sudo /home/ubuntu/install-tools.v0.3.2.sh' >>/home/ubuntu/.bashrc
+  - touch "/home/ubuntu/installed.flag"
+  - echo 'if [ ! -e "/home/ubuntu/installed.flag" ]; then "/home/ubuntu/install.sh ; fi' >>/root/.bashrc
+  - echo '. ~/.profile' >>/ubuntu/.bashrc
 # - printf 'y\n' | sudo /home/ubuntu/install-tools.v0.3.2.sh
