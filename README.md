@@ -4,7 +4,7 @@ A simple scirpt that uses terraform to spin up a machine for Active Counter Meas
 
 ### Opening notes from Active CounterMeasures
 
-```mb
+```md
 You're welcome to continue using this machine after the class is done:
 we hope you'll take some more time to try out the tools and do the labs!
 ```
@@ -14,11 +14,25 @@ If you are new to the Linux operating system please visit to page on navigating 
 -	https://www.redhat.com/sysadmin/navigating-linux-filesystem
 	
 ## Getting Started
+Download Terra-Thunt
+```md
+curl https://raw.githubusercontent.com/13bm/terra-thunt/main/thunt.ps1 -o thunt.ps1
+```
 
+Set Powershell Execution Policy
+```md
+Set-ExecutionPolicy Unrestricted
+```
+
+After you are done you can Set Powershell Execution Policy back to the default
+```md
+Set-ExecutionPolicy Restricted
+```
+
+More about Powershell Excution Policy can be found  [here](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.2)
+## 1.0 Creating Cloud Account
 In order to use this scirpt you will need a cloud provider account and token/keys for said account to authenticate.
 
-
-## 1.0 Creating Cloud Account
 Digital Oceans is the **_recommended_** choice for beginners
  - ##### 1.1 Signing up for Digital Oceans free trial
 	 - https://try.digitalocean.com/freetrialoffer/
@@ -63,18 +77,24 @@ When connected a scirpt will be run to finish the install on the machine. This s
 In this script you'll be asked if users other than root should be allowed to run wireshark to capture packets. Unless you know you'll be using this long term, will be creating non-root user accounts, and want them to sniff packets, leave the answer at the default of "No". 
 
 You'll also be asked to configure Zeek, Answer ```y```
-```"Would you like to continue running the zeek configuration script and generate a new node.cfg file? (y/n) ?:``` 
+```md
+"Would you like to continue running the zeek configuration script and generate a new node.cfg file? (y/n) ?:
+``` 
 
 For eth0 you'll be asked, Answer ```y```
-```"Would you like to include it as a sniff interface (y/n)?"```  
+```md
+"Would you like to include it as a sniff interface (y/n)?"
+```  
 
 For eth1, Answer ```n```. 
 
 Would you like to replace the existing node.cfg, Answer ```y```
- ```"Would you like to replace the existing node.cfg with the above file?"```
+ ```md
+ "Would you like to replace the existing node.cfg with the above file?"
+ ```
 
 Once Zeek is done setting up, you can see the 3 lab directories by running the command:
-```md
+```bash
 ls -Al ~/lab*
 ```
 
