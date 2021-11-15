@@ -4,7 +4,7 @@ A simple scirpt that uses terraform to spin up a machine for Active Counter Meas
 
 ### Opening notes from Active CounterMeasures
 
-```md
+```txt
 You're welcome to continue using this machine after the class is done:
 we hope you'll take some more time to try out the tools and do the labs!
 ```
@@ -15,17 +15,17 @@ If you are new to the Linux operating system please visit to page on navigating 
 	
 ## Getting Started
 Download Terra-Thunt
-```md
+```txt
 curl https://raw.githubusercontent.com/13bm/terra-thunt/main/thunt.ps1 -o thunt.ps1
 ```
 
 Set Powershell Execution Policy
-```md
+```txt
 Set-ExecutionPolicy Unrestricted
 ```
 
 After you are done you can Set Powershell Execution Policy back to the default
-```md
+```txt
 Set-ExecutionPolicy Restricted
 ```
 
@@ -46,26 +46,26 @@ Digital Oceans is the **_recommended_** choice for beginners
 	- https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html
 ## 3.0 Running Terra-Thunt
 Open powershell and run Terra-Thunt
-```md
+```txt
 PS > .\thunt.ps1
 ```
 Terra-Thunt will be downloaded/updated
-```md
+```txt
 PS > .\thunt.ps1
 Downloading\Updating Terra-Thunt
 ```
 Pick your Cloud provider
-```md
+```txt
 Please pick Cloud Provider, [A] AWS or [D] DigitalOcean:
 ```
 - **AWS** option will give you the choice of using preconfigured aws keys located in the **`~/.aws/`** folder ( more on this  [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)) or enviorment variables which you will be ask for. Please save AWS keys securely 
 
-  ```md
+  ```txt
   Please pick which aws creds to use, [A] /.aws/ or [E] Environment variables:
   ```
  - **Digital Ocean** option will ask for the access token, please save this token securely
 
-	```md
+	```txt
 	Please Provide DigitalOcean Token:
 	```
 
@@ -77,19 +77,19 @@ When connected a scirpt will be run to finish the install on the machine. This s
 In this script you'll be asked if users other than root should be allowed to run wireshark to capture packets. Unless you know you'll be using this long term, will be creating non-root user accounts, and want them to sniff packets, leave the answer at the default of "No". 
 
 You'll also be asked to configure Zeek, Answer ```y```
-```md
+```txt
 "Would you like to continue running the zeek configuration script and generate a new node.cfg file? (y/n) ?:
 ``` 
 
 For eth0 you'll be asked, Answer ```y```
-```md
+```txt
 "Would you like to include it as a sniff interface (y/n)?"
 ```  
 
 For eth1, Answer ```n```. 
 
 Would you like to replace the existing node.cfg, Answer ```y```
- ```md
+ ```txt
  "Would you like to replace the existing node.cfg with the above file?"
  ```
 
@@ -100,7 +100,7 @@ ls -Al ~/lab*
 
 If you get back a listing that includes "lab1", "lab2", and "lab3" similar to the below, you have everything installed and are ready to start the labs. 
 
-```md
+```txt
 /root/lab1:
 total 88512
 -rw-rw-r-- 1 1000 1000 1769129 Feb 17 17:25 conn.log
@@ -145,14 +145,14 @@ Cloud providers continues to bill you for the machine until you delete it! Loggi
 
 Terra-Thunt can tear down and destroy all resources it used to make the machine. 
 Answer ```r``` to do so.
-```md
+```txt
 Please confirm, enter [R] Ready to teardown infrastructure or [C] to connect again:
 ```
 
 In the event that you closed the powershell window before tearing down the infrastructure
 you can simply run Terra-Thunt again. 
 
-```md
+```txt
 PS > .\thunt.ps1
 ```
 
