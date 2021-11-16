@@ -25,7 +25,7 @@ resource "digitalocean_droplet" "Thunt" {
     image = "ubuntu-18-04-x64"
     name = "Thunt"
     region = "nyc1"
-    size = "s-1vcpu-1gb"
+    size = "s-4vcpu-8gb"
     tags = ["Learn-Thunt"]
     user_data = data.template_file.user_data.rendered
     ssh_keys = [digitalocean_ssh_key.Thunt-key.fingerprint]
