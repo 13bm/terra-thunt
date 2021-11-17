@@ -1,26 +1,24 @@
 try {
-    $old_ErrorActionPreference = $ErrorActionPreference
     $ErrorActionPreference = 'SilentlyContinue'
     Write-Host "Downloading/Updating Terra-Thunt"
     $null = Invoke-WebRequest -Uri https://github.com/13bm/terra-thunt/archive/refs/heads/main.zip -OutFile .\terra-thunt.zip
     $null = Expand-Archive .\terra-thunt.zip -DestinationPath .\terra-thunt-main -Force
     $null = Move-Item -Path .\terra-thunt-main\terra-thunt-main\* -Destination .\ -Force
-    rm -r -fo .\terra-thunt-main
-    rm .\terra-thunt.zip
+    Remove-Item -r -fo .\terra-thunt-main
+    Remove-Item .\terra-thunt.zip
 }
 catch {
     throw $_.Exception.Message
 }
-Function Clean-up {
-    $old_ErrorActionPreference = $ErrorActionPreference
+Function Clean-Up {
     $ErrorActionPreference = 'SilentlyContinue'
     Remove-Item Env:TF_VAR_SSH_KEY
     Set-Variable -Name 'DIO' -Value (0) -Scope Global
     Set-Variable -Name 'tfl' -Value (0) -Scope Global
-    rm id_ssh
-    rm id_ssh.pub
+    Remove-Item id_ssh
+    Remove-Item id_ssh.pub
 }
-Function Terraform-installed{
+Function Get-Terraform{
             try {
                 if (terraform){
                 Write-Host "Terraform already installed, nice"
@@ -36,8 +34,8 @@ Function Terraform-installed{
                         Write-Host "Now extracting"
                         $null = Expand-Archive .\terraform.zip -DestinationPath .\terraform
                         $null = Move-Item -Path .\terraform\terraform.exe -Destination terraform.exe
-                        rm .\terraform
-                        rm terraform.zip
+                        Remove-Item .\terraform
+                        Remove-Item terraform.zip
                         Set-Variable -Name 'tfl' -Value (1) -Scope Global
                         Write-Host "Terraform ready!!"
                     }
@@ -53,7 +51,6 @@ Function Terraform-installed{
             }
         }
 
-Terraform-installed
 function Get-Provider {
     $pinput = read-host "Please pick Cloud Provider, [A] AWS or [D] DigitalOcean"
 
@@ -156,10 +153,11 @@ Function destroy {
         }
     }
 }
+Get-Terraform
 Get-Provider
 #Start-Sleep -Seconds 30
-ECHO 'n' | ssh-keygen -t rsa -C "Thunt" -f .\id_ssh -q -N """"
-$env:TF_VAR_SSH_KEY = cat id_ssh.pub
+Write-Output 'n' | ssh-keygen -t rsa -C "Thunt" -f .\id_ssh -q -N """"
+$env:TF_VAR_SSH_KEY = Get-Content id_ssh.pub
 if($DIO -eq $true){
     if($tfl -eq $true){
         .\terraform '-chdir=.\DIO' init
