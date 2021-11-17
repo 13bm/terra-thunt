@@ -50,8 +50,7 @@ Function Get-Terraform{
                 }
             }
         }
-
-function Get-Provider {
+Function Get-Provider {
     $pinput = read-host "Please pick Cloud Provider, [A] AWS or [D] DigitalOcean"
 
     switch ($pinput) `
@@ -71,7 +70,7 @@ function Get-Provider {
         }
     }
 }
-function aws-choice {
+Function aws-choice {
     $pinput = read-host "Please pick which aws creds to use, [A] /.aws/ or [E] Environment variables"
 
     switch ($pinput) `
@@ -89,7 +88,7 @@ function aws-choice {
         }
     }
 }
-function awscreds {
+Function awscreds {
     if ($null -eq $env:AWS_ACCESS_KEY_ID) {
         $aws_access_key_id = read-host -Prompt "Please Provide AWS Access Key id" -AsSecureString
         $aws_access_key_id = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($aws_access_key_id))
@@ -101,7 +100,7 @@ function awscreds {
         $env:AWS_SECRET_ACCESS_KEY = $aws_secret_access_key
     }
 }
-function DIOcreds {
+Function DIOcreds {
     Set-Variable -Name 'DIO' -Value (1) -Scope Global
     if ($null -eq $env:DIGITALOCEAN_TOKEN) {
         $dioinput = read-host -Prompt "Please Provide DigitalOcean Token" -AsSecureString
@@ -181,7 +180,7 @@ else {
 Write-Host "Waiting 30s for host to come online"
 Start-Sleep -Seconds 30
 Login
-function Get-Answer {
+Function Get-Answer {
     $input = read-host "Please confirm, enter [R] Ready to teardown infrastructure or [C] to connect again"
 
     switch ($input) `
