@@ -1,6 +1,6 @@
 # Terra-Thunt
 
-A simple scirpt that uses terraform to spin up a machine for Active Counter Measure's Threat Hunting class with the cloud provider of your choice (AWS or Digital Oceans). Along with setting it.
+A simple scirpt that uses terraform to spin up a machine for Active Counter Measure's Threat Hunting class with the cloud provider of your choice (AWS or Digital Oceans). Along with setting it up.
 
 ### Opening notes from Active CounterMeasures
 
@@ -69,7 +69,7 @@ Please pick Cloud Provider, [A] AWS or [D] DigitalOcean:
 	Please Provide DigitalOcean Token:
 	```
 
-## 4.0 Final Touchs
+## 4.0 Final Touches
 Terra-Thunt will automagically deploy a machine in the cloud and connect to it for you over ssh in a new powershell window **it is important you do not close the orignal windows, that will be needed for later**
 
 When connected a scirpt will be run to finish the install on the machine. This script will pull down needed utilities, install rita and supporting tools, and pull down the sample data needed for the labs. It'll take a few minutes. 
