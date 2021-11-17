@@ -1,6 +1,6 @@
 # Terra-Thunt
 
-A simple scirpt that uses terraform to spin up a machine for Active Counter Measure's Threat Hunting class with the cloud provider of your choice (AWS or Digital Oceans). Along with setting it.
+A simple scirpt that uses terraform to spin up a machine for Active Counter Measure's Threat Hunting class with the cloud provider of your choice (AWS or Digital Oceans). Along with setting it up.
 
 ### Opening notes from Active CounterMeasures
 
